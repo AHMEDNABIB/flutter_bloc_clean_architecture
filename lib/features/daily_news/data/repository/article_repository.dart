@@ -24,18 +24,18 @@ class ArticleRepositoryImpl implements ArticleRepository {
       );
 
       if (httpResponse.response.statusCode == HttpStatus.ok) {
-        return DataSuccess(httpResponse.data);
+        return DataSuccess(httpResponse.data.articles);
       } else {
         return DataFailed(
-          DioError(
+          DioException(
             error: httpResponse.response.statusMessage,
             response: httpResponse.response,
-            type: DioErrorType.badResponse,
+            type: DioExceptionType.badResponse,
             requestOptions: httpResponse.response.requestOptions,
           ),
         );
       }
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       return DataFailed(e);
     }
   }

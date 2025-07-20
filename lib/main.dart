@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_bloc_clean/features/daily_news/presentation/bloc/article/remote/remote_article_bloc.dart';
+import 'package:flutter_bloc_clean/features/daily_news/presentation/pages/home/daily_news.dart';
+import 'package:flutter_bloc_clean/injection_container.dart';
 
 void main() {
+  intializeDependencies();
   runApp(const MyApp());
 }
 
@@ -9,13 +14,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+    return BlocProvider<RemoteArticleBloc>(
+      create: (context) => sl()..add(GetArticles()),
+      child: MaterialApp(debugShowCheckedModeBanner: false, home: DailyNews()),
     );
   }
 }
